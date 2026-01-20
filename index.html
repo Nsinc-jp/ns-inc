@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NS Inc. - Basketball × Print × Apparel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+            line-height: 1.8;
+            color: #fff;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        nav {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 4rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #fff;
+            line-height: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            transition: opacity 0.3s;
+            font-weight: 300;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1920&q=80') center/cover;
+            filter: brightness(0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 4px;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 2rem;
+            line-height: 1.1;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+        }
+
+        section {
+            position: relative;
+            padding: 10rem 4rem;
+        }
+
+        .section-header {
+            max-width: 1600px;
+            margin: 0 auto 6rem;
+            text-align: center;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            color: #888;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 2rem;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            color: #999;
+            line-height: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .business-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .business-grid.four-items {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .business-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 600px;
+        }
+
+        .business-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .business-item:hover .business-image {
+            transform: scale(1.05);
+        }
+
+        .business-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            transition: background 0.4s;
+        }
+
+        .business-item:hover .business-overlay {
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.95) 100%);
+        }
+
+        .business-category {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: #888;
+            margin-bottom: 0.5rem;
+            min-height: 1rem;
+        }
+
+        .business-name {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+            min-height: 4.4rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .business-description {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #aaa;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s;
+        }
+
+        .business-item:hover .business-description {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .business-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #fff;
+            padding: 0.8rem 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .business-link:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        .values-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 3rem;
+        }
+
+        .value-item {
+            text-align: center;
+        }
+
+        .value-number {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            opacity: 0.3;
+        }
+
+        .value-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .value-description {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #888;
+        }
+
+        .company-section {
+            background: #0a0a0a;
+        }
+
+        .company-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2rem 4rem;
+        }
+
+        .company-label {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: #666;
+            padding-top: 0.5rem;
+        }
+
+        .company-value {
+            font-size: 1rem;
+            color: #aaa;
+            line-height: 2;
+        }
+
+        .contact-section {
+            text-align: center;
+            padding: 15rem 4rem;
+            background: #000;
+        }
+
+        .contact-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            letter-spacing: -1px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #fff;
+            padding: 1.2rem 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .contact-button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-info {
+            font-size: 0.8rem;
+            color: #444;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .footer-copyright {
+            font-size: 0.75rem;
+            color: #333;
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, -10px); }
+        }
+
+        @media (max-width: 1200px) {
+            .business-grid,
+            .business-grid.four-items {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .values-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 6rem 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .company-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .contact-title {
+                font-size: 2rem;
+            }
+
+            .contact-section {
+                padding: 8rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">N's Inc.</div>
+            <ul class="nav-links">
+                <li><a href="#business">BUSINESS</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#company">COMPANY</a></li>
+                <li><a href="#contact">CONTACT</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-subtitle">WE ARE</div>
+            <h1>BASKETBALL × PRINT<br>× APPAREL</h1>
+            <div class="hero-text">3つの事業で、新しい価値を創造する</div>
+        </div>
+        <div class="scroll-indicator">SCROLL</div>
+    </section>
+
+    <section id="business">
+        <div class="section-header">
+            <div class="section-label">BUSINESS</div>
+            <h2 class="section-title">Our Business</h2>
+            <p class="section-description">
+                バスケットボール、プリント、アパレルという3つの異なる分野で、<br>
+                それぞれの専門性を活かしたサービスを提供しています
+            </p>
+        </div>
+
+        <div class="business-grid four-items">
+            <div class="business-item">
+                <div class="business-image" style="background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80');"></div>
+                <div class="business-overlay">
+                    <div class="business-content">
+                        <div class="business-category">#BASKETBALL SCHOOL</div>
+                        <div class="business-name">N's Basketball<br>Academy</div>
+                        <div class="business-description">
+                            バスケットボールを通じて、子どもたちの心と体を育てるスクール事業。基礎から応用まで、一人ひとりのレベルに合わせた指導を提供します。
+                        </div>
+                        <a href="https://www.instagram.com/ns_basketball_academy/" target="_blank" class="business-link">
+                            INSTAGRAM →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="business-item">
+                <div class="business-image" style="background-image: url('https://images.unsplash.com/photo-1612968168985-f1c6a3c5e5f8?w=800&q=80');"></div>
+                <div class="business-overlay">
+                    <div class="business-content">
+                        <div class="business-category">#PRINT SERVICE</div>
+                        <div class="business-name">N's PRINT<br>STORE</div>
+                        <div class="business-description">
+                            高品質なプリントサービスを提供。オリジナルTシャツやグッズ制作など、お客様のアイデアを形にします。小ロットから対応可能です。
+                        </div>
+                        <a href="https://www.instagram.com/ns_s2_print/" target="_blank" class="business-link">
+                            INSTAGRAM →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="business-item">
+                <div class="business-image" style="background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80');"></div>
+                <div class="business-overlay">
+                    <div class="business-content">
+                        <div class="business-category">#APPAREL BRAND</div>
+                        <div class="business-name">ENOUZ</div>
+                        <div class="business-description">
+                            オリジナルアパレルブランド「ENOUZ」を展開。トレンドを取り入れたスタイリッシュなデザインと着心地の良さを追求します。
+                        </div>
+                        <a href="https://www.instagram.com/enouz.jp/" target="_blank" class="business-link">
+                            INSTAGRAM →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="business-item">
+                <div class="business-image" style="background-image: url('https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&q=80');"></div>
+                <div class="business-overlay">
+                    <div class="business-content">
+                        <div class="business-category">#APPAREL BRAND</div>
+                        <div class="business-name">KINDNESS</div>
+                        <div class="business-description">
+                            優しさをコンセプトにしたアパレルブランド「KINDNESS」。心地よさと温かみのあるデザインを提案します。
+                        </div>
+                        <a href="https://www.instagram.com/ns_kindness/" target="_blank" class="business-link">
+                            INSTAGRAM →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-header">
+            <div class="section-label">ABOUT</div>
+            <h2 class="section-title">Our Values</h2>
+            <p class="section-description">
+                私たちが大切にしている価値観
+            </p>
+        </div>
+
+        <div class="values-grid">
+            <div class="value-item">
+                <div class="value-number">01</div>
+                <div class="value-title">多角的な事業展開</div>
+                <div class="value-description">
+                    3つの異なる事業を運営することで、幅広いニーズに対応できる柔軟性を持っています。
+                </div>
+            </div>
+
+            <div class="value-item">
+                <div class="value-number">02</div>
+                <div class="value-title">専門性の追求</div>
+                <div class="value-description">
+                    各事業において、専門知識と経験を持つスタッフが最高品質のサービスを提供します。
+                </div>
+            </div>
+
+            <div class="value-item">
+                <div class="value-number">03</div>
+                <div class="value-title">地域密着型</div>
+                <div class="value-description">
+                    地域に根ざした活動を通じて、お客様との信頼関係を大切にしています。
+                </div>
+            </div>
+
+            <div class="value-item">
+                <div class="value-number">04</div>
+                <div class="value-title">クリエイティビティ</div>
+                <div class="value-description">
+                    常に新しいアイデアと挑戦を大切に、革新的なサービスを提供し続けます。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="company" class="company-section">
+        <div class="section-header">
+            <div class="section-label">COMPANY</div>
+            <h2 class="section-title">Company Profile</h2>
+        </div>
+
+        <div class="company-grid">
+            <div class="company-label">会社名</div>
+            <div class="company-value">株式会社N's</div>
+
+            <div class="company-label">事業内容</div>
+            <div class="company-value">
+                バスケットボールスクール運営<br>
+                プリントサービス事業<br>
+                アパレルブランド展開
+            </div>
+
+            <div class="company-label">所在地</div>
+            <div class="company-value">大阪府大阪市都島区毛馬町5−19−6</div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2 class="contact-title">CONTACT</h2>
+        <p class="section-description" style="margin-bottom: 4rem;">
+            各事業に関するご質問やご相談は、<br>
+            それぞれのInstagramアカウントからお気軽にお問い合わせください
+        </p>
+        <div class="contact-buttons">
+            <a href="https://www.instagram.com/ns_basketball_academy/" target="_blank" class="contact-button">
+                BASKETBALL ACADEMY
+            </a>
+            <a href="https://www.instagram.com/ns_s2_print/" target="_blank" class="contact-button">
+                S2 PRINT
+            </a>
+            <a href="https://www.instagram.com/enouz.jp/" target="_blank" class="contact-button">
+                ENOUZ
+            </a>
+            <a href="https://www.instagram.com/ns_kindness/" target="_blank" class="contact-button">
+                KINDNESS
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://www.instagram.com/ns_basketball_academy/" target="_blank">BASKETBALL ACADEMY</a>
+                <a href="https://www.instagram.com/ns_s2_print/" target="_blank">S2 PRINT</a>
+                <a href="https://www.instagram.com/enouz.jp/" target="_blank">ENOUZ</a>
+                <a href="https://www.instagram.com/ns_kindness/" target="_blank">KINDNESS</a>
+            </div>
+            <div class="footer-info">
+                N's Inc.<br>
+                大阪府大阪市都島区毛馬町5−19−6
+            </div>
+            <div class="footer-copyright">
+                ©N's Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
